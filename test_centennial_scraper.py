@@ -61,10 +61,62 @@ class TestCentennialScraper(unittest.TestCase):
         self.assertIn("source_url", result, "Result should have a 'source_url' key")
         self.assertEqual(result["source_url"], url, "The source URL should match the requested URL")
 
+        #Tests added by cwhitexula29
+
+    def test_impact_text_contains_real_content(self):
+        """
+        Test 6: Ensure the scraped text contains real sentences (not placeholders).
+        """
+        url = "https://www.xula.edu/about/centennial.html"
+        result = get_centennial_campaign_impact(url)
+
+        text = " ".join(result["impact_text"]).lower()
+        self.assertGreater(len(text.split()), 5, "Impact text should contain meaningful content")
 
 
+    def test_result_has_all_required_keys(self):
+        """
+        Test 7: Ensure the dictionary contains title, impact_text, and source_url.
+        """
+        url = "https://www.xula.edu/about/centennial.html"
+        result = get_centennial_campaign_impact(url)
 
+        expected_keys = {"title", "impact_text", "source_url"}
+        self.assertTrue(expected_keys.issubset(result.keys()),
+                        "Missing one or more required keys in the result")
         
+
+    def test_title_contains_letters(self):
+        """
+        Test 8: Title should include alphabetic characters.
+        """
+        url = "https://www.xula.edu/about/centennial.html"
+        result = get_centennial_campaign_impact(url)
+
+        self.assertRegex(result["title"], r"[A-Za-z]", "Title should contain letters")
+
+
+    def test_source_url_is_string(self):
+        """
+        Test 9: Confirm source_url is always stored as a string.
+        """
+        url = "https://www.xula.edu/about/centennial.html"
+        result = get_centennial_campaign_impact(url)
+
+        self.assertIsInstance(result["source_url"], str, "source_url must be a string")
+
+    
+    def test_malformed_html_returns_fallback(self):
+        """
+        Test 10: Even if the URL returns malformed or empty HTML,
+        the function should return the fallback message.
+        """
+        bad_url = "https://www.xula.edu/thispagedoesnotexist"
+        result = get_centennial_campaign_impact(bad_url)
+
+        self.assertEqual(result["impact_text"], ["Campaign impact text not found."],
+                         "Fallback text should be returned for malformed HTML")
+
 
 if __name__ == "__main__":
     unittest.main()
