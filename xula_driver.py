@@ -9,6 +9,7 @@ import requests
 from Movie import Movie
 from Rank_show_duration import rank_tv_shows_by_duration
 from Rank_movie_duration import RankMovieDuration
+from PIL import Image
 
 
 
@@ -81,8 +82,31 @@ def print_welcome_message():
             ╚═══════════════════════════════════════════════════════╝
     """)
 
+#Brand.png added by cwhitexula29
+def show_brand_popup():
+    import tkinter as tk
+    from PIL import Image, ImageTk
+
+    window = tk.Tk()
+    window.title("Welcome")
+
+    img = Image.open("assets/brand.png")
+    img = img.resize((350, 350))
+    img_tk = ImageTk.PhotoImage(img)
+
+    label = tk.Label(window, image=img_tk)
+    label.image = img_tk
+    label.pack()
+
+    btn = tk.Button(window, text="Continue", command=window.destroy)
+    btn.pack(pady=10)
+
+    window.mainloop()
+
 
 def main():
+    #calling brand popup function
+    show_brand_popup()
 
     tv_raw = pd.read_csv("TV_Data.csv")
     print("\n--- Loaded TV Data ---")
