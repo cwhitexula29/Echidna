@@ -252,18 +252,24 @@ def main():
     # else:
     #     print(movies_by_director[['Title', 'Date', 'Genre', 'Rating']].to_string(index=False))
 
-#fake movie feature added by cwhitexula29
-from fake_movie import FakeMovie
+    #fake movie feature added by cwhitexula29
+    from fake_movie import FakeMovie
 
-fake = FakeMovie()
-fake_movie = fake.generate_movie()
+    fake = FakeMovie()
+    fake_movie = fake.generate_movie()
 
-print("\n 🎬 Fake Movie Generator 🎬")
-print(f"{fake_movie['Title']} ({fake_movie['Date']}) — {fake_movie['Genre']} | Rating: {fake_movie['Rating']}")
+    print("\n 🎬 Fake Movie Generator 🎬")
+    print(f"{fake_movie['Title']} ({fake_movie['Date']}) — {fake_movie['Genre']} | Rating: {fake_movie['Rating']}")
     
-    
+    #TV show recommender feature added by @cwhitexula29
 
+    from tv_recommendation import TVShowRecommender
 
+    tv_recommender = TVShowRecommender(full_df2)
+    tv_suggestion = tv_recommender.recommend_show()
+
+    print("\n📺 Recommended TV Show 📺")
+    print(f"{tv_suggestion['Title']} ({tv_suggestion['Date']}) - {tv_suggestion['Genre']} | Rating: {tv_suggestion['Rating']}")
 
 
 if __name__ == "__main__":
